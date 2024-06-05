@@ -18,18 +18,28 @@ import { dateFormatter, getCurrentUser } from "@/lib/utils";
 import { StarFilledIcon } from "@radix-ui/react-icons";
 import BuyMovieAlert from "@/components/movie/BuyMovieAlert";
 import { redirect } from "next/navigation";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   params: { movieId: string };
 }
 export default async function MovieDetail({ params: { movieId } }: Props) {
+  const user = await getCurrentUser();
   const { success: movie } = await getMovieDetails(movieId);
-  if (!movie.backdrop_path) {
+  if (!movie.id) {
     redirect("/movies");
   }
   const trailers = (await getMovieTrailer(movieId)).slice(0, 3);
   const similarMovies = await getMovieSimilar(movieId);
-  const user = await getCurrentUser();
 
   return (
     <div className="px-4 xl:px-8">
@@ -45,7 +55,31 @@ export default async function MovieDetail({ params: { movieId } }: Props) {
           }}
         />
         <div className="mt-6 lg:mt-0 grid gap-2 lg:gap-4">
-          <BuyMovieAlert user={user} movie={movie} />
+          {!user && (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="capitalize w-fit bg-green-700 rounded-full font-bold xl:text-xl xl:p-[1.5rem_2rem]">
+                  make it yours
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Cannot Buy This Movie</DialogTitle>
+                </DialogHeader>
+                <div className="text-sm lg:text-base my-6 mx-4 lg:w-[80%]">
+                  You need to login first to purchase this movie.
+                </div>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button type="button" className="bg-green-700">
+                      OK
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          )}
+          {user && <BuyMovieAlert user={user} movie={movie} />}
           <h2 className="font-bold lg:text-lg xl:text-4xl">{movie.title}</h2>
           <span className="text-xs xl:text-sm 2xl:text-base italic">
             {dateFormatter(movie.release_date)}
