@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String          @id @default(cuid())
+  name          String
+  username      String
+  email         String          @unique
+  password      String
+  saldo         Int             @default(450000)
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[] 
+  transaction   Transaction[]
+  createdAt DateTime @default(now())
+}
+
+model Transaction {
+  id                    String          @id @default(cuid())
+  userId                String
+  movie_id              Int
+  movie_title           String
+  movie_overview        String
+  movie_poster_path     String
+  movie_release_date    String
+  movie_rating          String
+  movie_review          Int
+  movie_price           Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  
+  type               String
+  provider           String
+  providerAccountId  String  
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+  createdAt DateTime @default(now())
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+}
