@@ -1,9 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-### PT Beruang Studio Indonesia
-
-### Frontend Test - Arya Adinul Fadlan
-
 ### Demo App: https://next-film.vercel.app
 
 ## Tech Stack:
@@ -12,7 +8,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 2. Fully TypeScript => No `any` type checking
 3. Next Auth => Authentication Solution
 4. Tailwind CSS => Styling Solution
-5. SQL with Prisma Adapter => Database Solution
+5. Postgre SQL with Prisma Adapter => Database Solution
 6. Shadcn UI => UI Framework
 7. React Hook Form => Form Handling
 8. Zod => Form Validation
