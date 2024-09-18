@@ -4,14 +4,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Tech Stack:
 
-1. Next JS 14.2.3 => Frontend Framework
-2. Fully TypeScript => No `any` type checking
-3. Next Auth => Authentication Solution
-4. Tailwind CSS => Styling Solution
-5. Postgre SQL with Prisma Adapter => Database Solution
-6. Shadcn UI => UI Framework
-7. React Hook Form => Form Handling
-8. Zod => Form Validation
+1. Next JS 14.2.3
+2. Fully TypeScript
+3. Next Auth
+4. Tailwind CSS
+5. Neon Tech (Cloud Database)
+6. Postgre SQL with Prisma Adapter
+7. Shadcn UI
+8. React Hook Form
+9. Zod
 
 ## Available Pages:
 
